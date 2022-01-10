@@ -1,0 +1,18 @@
+---
+title: "Lab 1"
+author: "Eliott Doyle"
+date: "1/10/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(tidyverse)
+library(rio)
+library(here)
+library(knitr)
+library(janitor)
+```
+
