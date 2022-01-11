@@ -1,8 +1,10 @@
 ---
 title: "Lab 1"
-author: "Eliott Doyle"
+author: "Eliott Doyle, Diana DeWald"
 date: "1/10/2022"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -14,5 +16,91 @@ library(rio)
 library(here)
 library(knitr)
 library(janitor)
+library(edld652)
+library(readr)
 ```
 
+```{r initial_exploration, warning = FALSE}
+
+# downloaded rstats data manually from course repo
+# reading the data into the environment using readr
+tweets <- read_rds("rstats_tweets.rds", refhook = NULL)
+
+
+# histogram of variable display_text_width column with bins = 10
+ggplot(tweets, aes(x = display_text_width)) +
+  geom_histogram(fill = "#1c8d83",
+                 color = "white",
+                 alpha = 0.7,
+                 bins = 10) +
+  theme_minimal() +
+  labs(title = "Histogram of tweet text width with 10 bins", x = "text width")
+
+# histogram of variable display_text_width column with bins = 25
+ggplot(tweets, aes(x = display_text_width)) +
+  geom_histogram(fill = "#23b3a7",
+                 color = "white",
+                 alpha = 0.7,
+                 bins = 25) +
+  theme_minimal() +
+  labs(title = "Histogram of tweet text width with 25 bins", x = "text width")
+
+# histogram of variable display_text_width column with bins = 50
+ggplot(tweets, aes(x = display_text_width)) +
+  geom_histogram(fill = "#2ad5c7",
+                 color = "white",
+                 alpha = 0.7,
+                 bins = 50) +
+  theme_minimal() +
+  labs(title = "Histogram of tweet text width with 50 bins", x = "text width")
+
+# histogram of variable display_text_width column with bins = 70
+ggplot(tweets, aes(x = display_text_width)) +
+  geom_histogram(fill = "#61e0d5",
+                 color = "white",
+                 alpha = 0.7,
+                 bins = 70) +
+  theme_minimal() +
+  labs(title = "Histogram of tweet text width with 70 bins", x = "text width")
+
+
+# We think that 50 bins represents the distribution of data sufficiently without being visually confusing or too small, so this is the number of bins we choose for a final histogram.
+
+
+
+
+# density plot with bandwidth = 7
+ggplot(tweets, aes(display_text_width)) +
+  geom_density(fill = "#9f3a23", 
+               bw = 7, alpha = 0.7) +
+ theme_minimal() +
+  labs(title = "Density plot of tweet text width with bandwidth = 7", x = "text width")
+
+
+# density plot with bandwidth = 5
+ggplot(tweets, aes(display_text_width)) +
+  geom_density(fill = "#d24f32", 
+               bw = 5, alpha = 0.7) +
+ theme_minimal() +
+  labs(title = "Density plot of tweet text width with bandwidth = 5", x = "text width")
+
+
+# density plot with bandwidth = 2
+ggplot(tweets, aes(display_text_width)) +
+  geom_density(fill = "#dc7760", 
+               bw = 2, alpha = 0.7) +
+ theme_minimal() +
+  labs(title = "Density plot of tweet text width with bandwidth = 2", x = "text width")
+
+
+# density plot with bandwidth = 0.5
+ggplot(tweets, aes(display_text_width)) +
+  geom_density(fill = "#e39382", 
+               bw = 0.5, alpha = 0.7) +
+ theme_minimal() +
+  labs(title = "Density plot of tweet text width with bandwidth = 0.5", x = "text width")
+
+
+# A bandwidth of 2 appears to capture the density of the text width variable sufficiently. Even though a bandwidth of 0.2 is more granular, it depicts so many individual ridges that it makes the graph less visually pleasing and easy to read. So we choose a bandwidth of 2 for our density plot.
+
+```
