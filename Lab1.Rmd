@@ -1,6 +1,6 @@
 ---
 title: "Lab 1"
-author: "Eliott Doyle"
+author: "Eliott Doyle, Diana DeWald"
 date: "1/10/2022"
 output: html_document
 editor_options: 
