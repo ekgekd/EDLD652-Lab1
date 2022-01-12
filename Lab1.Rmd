@@ -18,6 +18,8 @@ library(knitr)
 library(janitor)
 library(edld652)
 library(readr)
+library(tidytext)
+library(stringr)
 ```
 
 ```{r initial_exploration, warning = FALSE}
@@ -104,3 +106,24 @@ ggplot(tweets, aes(display_text_width)) +
 # A bandwidth of 2 appears to capture the density of the text width variable sufficiently. Even though a bandwidth of 0.2 is more granular, it depicts so many individual ridges that it makes the graph less visually pleasing and easy to read. So we choose a bandwidth of 2 for our density plot.
 
 ```
+
+
+
+```{r look_for_plot}
+# Converting all text to lowercase, creating a new column to display "yes" when a tweet contains the word "plot" and no if it does not
+tweets <- tweets %>% 
+  mutate(text = tolower(text),
+         plot_yn = ifelse(str_detect(text, "plot"), "yes", "no"))
+#View(tweets)
+
+# Counting how many tweets have "yes" in the plot_yn column
+plot_table <- tweets %>% 
+  select(plot_yn) %>% 
+  group_by(plot_yn) %>% 
+  summarize(n=n()) %>% 
+  mutate(percent = (n/sum(n)))
+plot_table
+
+# About 6.83% of the tweets in this dataset contain the word "plot"
+```
+
