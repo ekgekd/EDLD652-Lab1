@@ -127,3 +127,40 @@ plot_table
 # About 6.83% of the tweets in this dataset contain the word "plot"
 ```
 
+```{r plot_rough_draft}
+tweets <- read_rds("rstats_tweets.rds", refhook = NULL)
+
+# turning the text of tweets into a simple data frame
+tweets_df <- tibble(
+  paragraph = seq_along(tweets$text),
+  description = tweets$text
+)
+
+# breaking the tweets up into individual words
+tidy_tweets <- tweets_df %>% 
+  unnest_tokens(word, description)
+
+# counting total words
+tidy_tweets %>% 
+  count(word, sort = TRUE)
+
+# using stop words dataset and anti_join to get rid of common words
+
+rough_draft <- tidy_tweets %>% 
+  anti_join(stop_words) %>%
+  count(word, sort = TRUE)
+
+
+# we still need to remove a few rows containing individual words that aren't very informative (rstats, t.co, https, http, rt)
+
+rough_draft <- rough_draft[-c(1, 2, 3, 4, 9), ]
+
+# plotting the top 15 words
+rough_draft %>% 
+  mutate(word = reorder(word, n)) %>% 
+  slice(1:15) %>% 
+  ggplot(aes(n, word)) +
+    geom_col()
+
+
+```
