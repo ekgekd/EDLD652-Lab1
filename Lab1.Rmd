@@ -26,7 +26,7 @@ library(stringr)
 
 # downloaded rstats data manually from course repo
 # reading the data into the environment using readr
-tweets <- read_rds("rstats_tweets.rds", refhook = NULL)
+tweets <- read_rds("rstats_tweets.rds")
 
 
 # histogram of variable display_text_width column with bins = 10
@@ -128,7 +128,7 @@ plot_table
 ```
 
 ```{r plot_rough_draft}
-tweets <- read_rds("rstats_tweets.rds", refhook = NULL)
+tweets <- read_rds("rstats_tweets.rds")
 
 # turning the text of tweets into a simple data frame
 tweets_df <- tibble(
@@ -164,3 +164,28 @@ rough_draft %>%
 
 
 ```
+
+```{r stylized_plot}
+final_plot <- rough_draft %>% 
+  mutate(word = reorder(word, n)) %>% 
+  slice(1:15) %>% 
+  ggplot(aes(n, word)) +
+    geom_col(fill = "cornflowerblue", alpha = .8) +
+  theme_bw() +
+  theme(panel.grid.minor.y=element_blank(),
+           panel.grid.major.y=element_blank(),
+        panel.grid.minor.x=element_blank()) +
+  labs(title = "Word frequencies in posts",
+       subtitle = "Top 15 words displayed",
+       x = "Count",
+       y = "Word",
+       caption = "Data from Mike Kearny, distributed via #tidytuesday")
+
+
+final_plot
+```
+
+
+
+
+
